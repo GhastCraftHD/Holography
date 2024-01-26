@@ -11,6 +11,7 @@ import de.leghast.holography.ui.Page;
 import de.leghast.holography.ui.UserInterface;
 import de.leghast.holography.util.Util;
 import org.bukkit.Axis;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.EventHandler;
@@ -173,11 +174,41 @@ public class InventoryClickListener implements Listener {
         switch(attribute){
             case TEXT -> {
                 switch(slot){
-                    case 30 -> Util.getNewText(display.getText(), main, player);
-                    case 32 -> Util.getTextOpacity(display.getTextOpacity(), main, player);
+                    case 29 -> main.getClipboardManager().getWrapper(player.getUniqueId()).setNewText(main, player);
+                    case 30 -> main.getClipboardManager().getWrapper(player.getUniqueId()).setLineWidth(main, player);
+                    case 31 -> main.getClipboardManager().getWrapper(player.getUniqueId()).toggleTextShadow();
+                    case 32 -> main.getClipboardManager().getWrapper(player.getUniqueId()).setTextColor(main, player);
+                    case 33 -> main.getClipboardManager().getWrapper(player.getUniqueId()).setTextOpacity(main, player);
                 }
             }
-            case GRADIENT -> {}
+            case GRADIENT -> {
+                switch(slot){
+                    case 30 -> main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getAttributeSettings().setFirst(main, player);
+                    case 31 -> main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getAttributeSettings().setSecond(main, player);
+                    case 32 -> main.getClipboardManager().getWrapper(player.getUniqueId()).setTextGradient(main, player);
+                }
+            }
+            case BACKGROUND -> {
+                switch(slot){
+                    case 30 -> main.getClipboardManager().getWrapper(player.getUniqueId()).setBackgroundColor(main, player);
+                    case 32 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setDefaultBackground(true);
+                }
+            }
+            case ALIGNMENT -> {
+                switch(slot){
+                    case 30 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setAlignment(TextDisplay.TextAlignment.LEFT);
+                    case 31 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setAlignment(TextDisplay.TextAlignment.CENTER);
+                    case 32 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setAlignment(TextDisplay.TextAlignment.RIGHT);
+                }
+            }
+            case BILLBOARD -> {
+                switch(slot) {
+                    case 29 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setBillboard(Display.Billboard.VERTICAL);
+                    case 30 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setBillboard(Display.Billboard.HORIZONTAL);
+                    case 32 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setBillboard(Display.Billboard.CENTER);
+                    case 33 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setBillboard(Display.Billboard.FIXED);
+                }
+            }
         }
 
         if(slot != 26 && slot != 44){
