@@ -191,6 +191,7 @@ public class InventoryClickListener implements Listener {
             case BACKGROUND -> {
                 switch(slot){
                     case 30 -> main.getClipboardManager().getWrapper(player.getUniqueId()).setBackgroundColor(main, player);
+                    case 31 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setSeeThrough(!main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().isSeeThrough());
                     case 32 -> main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().setDefaultBackground(true);
                 }
             }

@@ -75,7 +75,7 @@ public class DisplayWrapper {
                 .onClick((slot, stateSnapshot) -> {
                     if(slot == AnvilGUI.Slot.OUTPUT){
                         String text = stateSnapshot.getText();
-                        text = text.replace("&n", "\n");
+                        text = text.replace("&x", "\n");
                         getDisplay().setText(ChatColor.translateAlternateColorCodes('&', text));
                         return Arrays.asList(AnvilGUI.ResponseAction.close());
                     }

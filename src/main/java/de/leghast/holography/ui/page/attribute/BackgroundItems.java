@@ -14,6 +14,12 @@ public class BackgroundItems {
         color.setItemMeta(colorMeta);
         content[30] = color;
 
+        ItemStack seeThrough = new ItemStack(Material.GLASS_PANE);
+        ItemMeta seeThroughMeta = seeThrough.getItemMeta();
+        seeThroughMeta.setDisplayName("§eToggle see-through");
+        seeThrough.setItemMeta(seeThroughMeta);
+        content[31] = seeThrough;
+
         ItemStack opacity = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
         ItemMeta defaultMeta = opacity.getItemMeta();
         defaultMeta.setDisplayName("§eReset the background");
