@@ -1,14 +1,14 @@
-name: Holography
-version: '${project.version}'
+name: $name
+version: $version
 main: de.leghast.holography.Holography
-api-version: '1.20'
+api-version: "$apiVersion"
 authors: [GhastCraftHD]
-description: A tool that makes working with Text Displays easy and convenient
+description: $description
 
 commands:
   hologram:
     aliases: holo
 permissions:
   holography.use:
-    default: true
+    default: op
     description: The permissions that lets you use Holography
