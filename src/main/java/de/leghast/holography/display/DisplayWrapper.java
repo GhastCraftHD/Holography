@@ -61,7 +61,7 @@ public record DisplayWrapper(TextDisplay display) {
                 Message.NEW_TEXT_SUBTITLE,
                 Title.Times.times(
                         Duration.of(200, ChronoUnit.MILLIS),
-                        Duration.of(4, ChronoUnit.SECONDS),
+                        Duration.of(6, ChronoUnit.SECONDS),
                         Duration.of(200, ChronoUnit.MILLIS)
                 )
         ));

@@ -8,6 +8,7 @@ import de.leghast.holography.settings.AttributeSettings;
 import de.leghast.holography.ui.Attribute;
 import de.leghast.holography.ui.Page;
 import de.leghast.holography.ui.UserInterface;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
@@ -48,8 +49,12 @@ public class AttributeInteractionHandler {
             case TEXT -> {
                 switch(slot){
                     case 29 -> {
-                        wrapper.registerChatInput(main, player);
-                        player.closeInventory();
+                        Bukkit.getScheduler().runTaskLater(main,
+                                () -> {
+                                    wrapper.registerChatInput(main, player);
+                                    player.closeInventory();
+                                }, 1L
+                        );
                     }
                     case 30 -> wrapper.setLineWidth(main, player);
                     case 31 -> wrapper.toggleTextShadow();
@@ -88,7 +93,7 @@ public class AttributeInteractionHandler {
             }
         }
 
-        if(attribute != Attribute.TEXT && slot != 29 && slot != 26 && slot != 44){
+        if(slot != 26 && slot != 44){
             new UserInterface(main, player, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getPage());
         }
 
