@@ -1,19 +1,22 @@
 package de.leghast.holography.ui;
 
+import de.leghast.holography.constant.Colors;
+import net.kyori.adventure.text.Component;
+
 public enum Page {
 
-    POSITION("§eAdjust the holograms position"),
-    SIZE("§eAdjust the holograms size"),
-    ROTATION("§eAdjust the holograms rotation"),
-    ATTRIBUTES("§eAdjust the holograms attributes");
+    POSITION(Component.text("Adjust the holograms position", Colors.ACCENT)),
+    SIZE(Component.text("Adjust the holograms size", Colors.ACCENT)),
+    ROTATION(Component.text("Adjust the holograms rotation", Colors.ACCENT)),
+    ATTRIBUTES(Component.text("Adjust the holograms attributes", Colors.ACCENT));
 
-    private String title;
+    private final Component title;
 
-    Page(String title){
+    Page(Component title){
         this.title = title;
     }
 
-    public String getTitle(){
+    public Component getTitle(){
         return this.title;
     }
 

@@ -1,6 +1,6 @@
 package de.leghast.holography.manager;
 
-import de.leghast.holography.instance.settings.AdjusterSettings;
+import de.leghast.holography.settings.AdjusterSettings;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
@@ -14,11 +14,8 @@ public class SettingsManager {
         settings = new HashMap<>();
     }
 
-    public boolean hasAdjusterSettings(UUID uuid){
-        return settings.containsKey(uuid);
-    }
-
     public AdjusterSettings getAdjusterSettings(UUID uuid){
+        if(!settings.containsKey(uuid)) addAdjusterSettings(uuid);
         return settings.get(uuid);
     }
 
@@ -27,9 +24,7 @@ public class SettingsManager {
     }
 
     public void removeAdjusterSettings(UUID uuid){
-        if(hasAdjusterSettings(uuid)){
             settings.remove(uuid);
-        }
     }
 
 

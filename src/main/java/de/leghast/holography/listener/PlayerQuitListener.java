@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener implements Listener {
 
-    private Holography main;
+    private final Holography main;
 
     public PlayerQuitListener(Holography main){
         this.main = main;
@@ -17,6 +17,7 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent e){
         main.getClipboardManager().remove(e.getPlayer().getUniqueId());
         main.getSettingsManager().removeAdjusterSettings(e.getPlayer().getUniqueId());
+        main.getChatInputManager().unregister(e.getPlayer().getUniqueId());
     }
 
 }

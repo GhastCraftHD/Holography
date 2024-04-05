@@ -1,13 +1,20 @@
 package de.leghast.holography.ui.page;
 
 import de.leghast.holography.Holography;
+import de.leghast.holography.constant.Colors;
 import de.leghast.holography.ui.Attribute;
+import de.leghast.holography.ui.FrequentItems;
+import de.leghast.holography.ui.InterfaceItem;
 import de.leghast.holography.ui.Page;
 import de.leghast.holography.ui.page.attribute.*;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 public class AttributesPage {
 
@@ -16,63 +23,52 @@ public class AttributesPage {
 
         Attribute attribute = main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getAttributeSettings().getAttribute();
 
-        PageUtil.addPageSwitchItems(content, Page.ATTRIBUTES);
+        FrequentItems.addPageSwitchItems(content, Page.ATTRIBUTES);
 
-        ItemStack text = new ItemStack(Material.FILLED_MAP);
-        ItemMeta textMeta = text.getItemMeta();
-        textMeta.setDisplayName("§eText");
-        text.setItemMeta(textMeta);
-        content[11] = text;
-        if(attribute == Attribute.TEXT){
-            PageUtil.addGlint(text);
-        }
+        content[11] = new InterfaceItem(Material.FILLED_MAP)
+                .name(Component.text("Text", Colors.ACCENT))
+                .description(
+                        Component.text("Adjust text attributes", NamedTextColor.GRAY)
+                )
+                .glow(() -> attribute == Attribute.TEXT);
 
-        ItemStack gradient = new ItemStack(Material.TORCHFLOWER);
-        ItemMeta gradientMeta = gradient.getItemMeta();
-        gradientMeta.setDisplayName("§eGradient");
-        gradient.setItemMeta(gradientMeta);
-        content[12] = gradient;
-        if(attribute == Attribute.GRADIENT){
-            PageUtil.addGlint(gradient);
-        }
+        content[12] = new InterfaceItem(Material.TORCHFLOWER)
+                .name(Component.text("Gradients", Colors.ACCENT))
+                .description(
+                        Component.text("Apply gradients", NamedTextColor.GRAY)
+                )
+                .glow(() -> attribute == Attribute.GRADIENT);
 
-        ItemStack background = new ItemStack(Material.PAINTING);
-        ItemMeta backgroundMeta = background.getItemMeta();
-        backgroundMeta.setDisplayName("§eBackground");
-        background.setItemMeta(backgroundMeta);
-        content[13] = background;
-        if(attribute == Attribute.BACKGROUND){
-            PageUtil.addGlint(background);
-        }
+        content[13] = new InterfaceItem(Material.PAINTING)
+                .name(Component.text("Background", Colors.ACCENT))
+                .description(
+                        Component.text("Adjust background", NamedTextColor.GRAY)
+                )
+                .glow(() -> attribute == Attribute.BACKGROUND);
 
-        ItemStack alignment = new ItemStack(Material.ANVIL);
-        ItemMeta alignmentMeta = alignment.getItemMeta();
-        alignmentMeta.setDisplayName("§eAlignment");
-        alignment.setItemMeta(alignmentMeta);
-        content[14] = alignment;
-        if(attribute == Attribute.ALIGNMENT){
-            PageUtil.addGlint(alignment);
-        }
+        content[14] = new InterfaceItem(Material.ANVIL)
+                .name(Component.text("Alignment", Colors.ACCENT))
+                .description(
+                        Component.text("Adjust alignment", NamedTextColor.GRAY)
+                )
+                .glow(() -> attribute == Attribute.ALIGNMENT);
 
-        ItemStack billboard = new ItemStack(Material.OAK_SIGN);
-        ItemMeta billboardMeta = billboard.getItemMeta();
-        billboardMeta.setDisplayName("§eBillboard");
-        billboard.setItemMeta(billboardMeta);
-        content[15] = billboard;
-        if(attribute == Attribute.BILLBOARD){
-            PageUtil.addGlint(billboard);
-        }
+        content[15] = new InterfaceItem(Material.OAK_SIGN)
+                .name(Component.text("Billboard", Colors.ACCENT))
+                .description(
+                        Component.text("Adjust the billboard", NamedTextColor.GRAY)
+                )
+                .glow(() -> attribute == Attribute.BILLBOARD);
 
         switch(attribute){
             case TEXT -> TextItems.getTextItems(content);
             case GRADIENT -> GradientItems.getGradientItems(content, main.getSettingsManager().getAdjusterSettings(player.getUniqueId()).getAttributeSettings());
             case BACKGROUND -> BackgroundItems.getBackgroundItems(content);
             case ALIGNMENT -> AlignmentItems.getAlignmentItems(content);
-            case BILLBOARD -> BillboardItems.getBillboardItems(content, main.getClipboardManager().getWrapper(player.getUniqueId()).getDisplay().getBillboard());
+            case BILLBOARD -> BillboardItems.getBillboardItems(content, main.getClipboardManager().getWrapper(player.getUniqueId()).display().getBillboard());
         }
 
-
-        PageUtil.addGeneralItems(content);
+        FrequentItems.addGeneralItems(content);
 
         return content;
     }

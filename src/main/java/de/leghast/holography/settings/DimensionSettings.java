@@ -1,4 +1,4 @@
-package de.leghast.holography.instance.settings;
+package de.leghast.holography.settings;
 
 import org.bukkit.Axis;
 
