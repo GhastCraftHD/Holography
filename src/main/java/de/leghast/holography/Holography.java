@@ -2,8 +2,10 @@ package de.leghast.holography;
 
 import de.leghast.holography.command.HologramCommand;
 import de.leghast.holography.listener.InventoryClickListener;
+import de.leghast.holography.listener.PlayerChatListener;
 import de.leghast.holography.listener.PlayerInteractListener;
 import de.leghast.holography.listener.PlayerJoinListener;
+import de.leghast.holography.manager.ChatInputManager;
 import de.leghast.holography.manager.ClipboardManager;
 import de.leghast.holography.manager.ConfigManager;
 import de.leghast.holography.manager.SettingsManager;
@@ -14,34 +16,36 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public final class Holography extends JavaPlugin {
 
+    public static String PERMISSION = "holography.use";
+
     private ClipboardManager clipboardManager;
     private SettingsManager settingsManager;
+    private ChatInputManager chatInputManager;
 
-    private String owner = "LeGhast";
-    private String repo = "Holography";
+    private boolean updateAvailable = false;
+    private String latestVersion = this.getPluginMeta().getVersion();
 
-    private boolean updateAvailable;
+    @Override
+    public void onLoad(){
+        ConfigManager.setupConfig(this);
+    }
 
     @Override
     public void onEnable() {
         clipboardManager = new ClipboardManager(this);
         settingsManager = new SettingsManager();
-        ConfigManager.setupConfig(this);
+        chatInputManager = new ChatInputManager();
         getCommand("hologram").setExecutor(new HologramCommand(this));
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
-
-        updateAvailable = isUpdateAvailable("v" + getDescription().getVersion());
-    }
-
-    @Override
-    public void onDisable(){
-        this.saveConfig();
+        Bukkit.getPluginManager().registerEvents(new PlayerChatListener(this), this);
+        checkForUpdate();
     }
 
     public ClipboardManager getClipboardManager(){
@@ -52,49 +56,57 @@ public final class Holography extends JavaPlugin {
         return settingsManager;
     }
 
-    public String getLatestReleaseVersion(){
-        String apiUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/releases/latest";
-
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            try {
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
-
-                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-
-                    reader.close();
-
-                    return response.toString().contains("tag_name")
-                            ? response.toString().split("\"tag_name\":\"")[1].split("\",")[0]
-                            : null;
-                } else {
-                    getLogger().log(Level.CONFIG,"Error: " + connection.getResponseCode() + " " + connection.getResponseMessage());
-                    return null;
-                }
-            } finally {
-                connection.disconnect();
-            }
-        }catch (Exception e){
-            return null;
-        }
+    public ChatInputManager getChatInputManager() {
+        return chatInputManager;
     }
 
-    private boolean isUpdateAvailable(String currentVersion){
-        String latestVersion = getLatestReleaseVersion();
-        return latestVersion != null && !latestVersion.equals(currentVersion);
+    private void checkForUpdate() {
+        if (!ConfigManager.CHECK_FOR_UPDATE) return;
+
+        String apiUrl = "https://api.github.com/repos/GhastCraftHD/Holography/releases/latest";
+
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                URL url = new URL(apiUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                try {
+                    connection.setRequestProperty("Content-Type", "application/json");
+
+                    if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) return;
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String input;
+                    StringBuilder response = new StringBuilder();
+
+                    while ((input = in.readLine()) != null) {
+                        response.append(input);
+                    }
+
+                    in.close();
+                    connection.disconnect();
+
+                    if (!response.toString().contains("tag_name")) return;
+
+                    latestVersion = response.toString().split("\"tag_name\":\"v")[1].split("\",")[0];
+
+                } finally {
+                    connection.disconnect();
+                }
+
+            } catch (Exception ignore) {}
+
+            updateAvailable = !Objects.equals(latestVersion, this.getPluginMeta().getVersion());
+        });
+
     }
 
     public boolean isUpdateAvailable(){
         return updateAvailable;
+    }
+
+    public String getLatestReleaseVersion(){
+        return latestVersion;
     }
 }

@@ -1,6 +1,7 @@
-package de.leghast.holography.instance.settings;
+package de.leghast.holography.settings;
 
-import de.leghast.holography.util.Util;
+import de.leghast.holography.constant.Message;
+import de.leghast.holography.ui.AnvilInputHelper;
 
 public class FactorSettings {
 
@@ -24,9 +25,9 @@ public class FactorSettings {
     public void setFactor(String factor){
         try{
             this.factor = Double.parseDouble(factor);
-            parent.getPlayer().sendMessage(Util.PREFIX + "§aThe factor was set to §e" + this.factor + " block" + (this.factor == 1 ? "" : "s"));
+            parent.getPlayer().sendMessage(Message.changedFactor(this.factor));
         }catch(NumberFormatException e){
-            parent.getPlayer().sendMessage(Util.PREFIX + "§cPlease provide a valid factor");
+            parent.getPlayer().sendMessage(Message.INVALID_FACTOR);
         }
     }
 

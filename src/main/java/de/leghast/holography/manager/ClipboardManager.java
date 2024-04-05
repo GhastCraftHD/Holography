@@ -1,7 +1,7 @@
 package de.leghast.holography.manager;
 
 import de.leghast.holography.Holography;
-import de.leghast.holography.instance.DisplayWrapper;
+import de.leghast.holography.display.DisplayWrapper;
 import org.bukkit.entity.TextDisplay;
 
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package de.leghast.holography.instance.settings;
+package de.leghast.holography.settings;
 
 import de.leghast.holography.ui.Page;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class AdjusterSettings {
         positionSettings = new DimensionSettings(this, 1);
         sizeSettings = new FactorSettings(this, 1);
         rotationSettings = new DimensionSettings(this, 22.5);
-        attributeSettings = new AttributeSettings(this);
+        attributeSettings = new AttributeSettings();
     }
 
     public Player getPlayer(){

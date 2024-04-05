@@ -1,6 +1,10 @@
 package de.leghast.holography.ui.page.attribute;
 
-import de.leghast.holography.instance.settings.AttributeSettings;
+import de.leghast.holography.constant.Colors;
+import de.leghast.holography.settings.AttributeSettings;
+import de.leghast.holography.ui.InterfaceItem;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,29 +16,20 @@ public class GradientItems {
 
     public static void getGradientItems(ItemStack[] content, AttributeSettings settings){
 
-        ItemStack first = new ItemStack(Material.PITCHER_POD);
-        ItemMeta firstMeta = first.getItemMeta();
-        firstMeta.setDisplayName("§eSet first color");
-        List<String> firstLore = new ArrayList<>();
-        firstLore.add("§7Current color: " + settings.getFirst() + "#" + Integer.toHexString(settings.getFirst().getColor().getRGB()).substring(2));
-        firstMeta.setLore(firstLore);
-        first.setItemMeta(firstMeta);
-        content[30] = first;
+        content[30] = new InterfaceItem(Material.PITCHER_POD)
+                .name(Component.text("Set first color", Colors.ACCENT))
+                .description(
+                        Component.text("Current color: " + settings.getGradientFirst().asHexString(), NamedTextColor.GRAY)
+                );
 
-        ItemStack second = new ItemStack(Material.PITCHER_PLANT);
-        ItemMeta secondMeta = second.getItemMeta();
-        secondMeta.setDisplayName("§eSet second color");
-        List<String> secondLore = new ArrayList<>();
-        secondLore.add("§7Current color: " + settings.getSecond() + "#" + Integer.toHexString(settings.getSecond().getColor().getRGB()).substring(2));
-        secondMeta.setLore(secondLore);
-        second.setItemMeta(secondMeta);
-        content[31] = second;
+        content[31] = new InterfaceItem(Material.PITCHER_PLANT)
+                .name(Component.text("Set second color", Colors.ACCENT))
+                .description(
+                        Component.text("Current color: " + settings.getGradientSecond().asHexString(), NamedTextColor.GRAY)
+                );
 
-        ItemStack apply = new ItemStack(Material.TORCHFLOWER);
-        ItemMeta applyMeta = apply.getItemMeta();
-        applyMeta.setDisplayName("§eApply gradient");
-        apply.setItemMeta(applyMeta);
-        content[32] = apply;
+        content[32] = new InterfaceItem(Material.TORCHFLOWER)
+                .name(Component.text("Apply gradient", Colors.ACCENT));
 
     }
 

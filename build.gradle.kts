@@ -24,7 +24,7 @@ java {
 }
 
 dependencies {
-  api("net.wesjd:anvilgui:1.9.2-SNAPSHOT")
+  api("net.wesjd:anvilgui:1.9.3-SNAPSHOT")
   paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
   // paperweight.foliaDevBundle("1.20.4-R0.1-SNAPSHOT")
   // paperweight.devBundle("com.example.paperfork", "1.20.4-R0.1-SNAPSHOT")
@@ -75,7 +75,7 @@ tasks {
 
   shadowJar {
     // helper function to relocate a package into our package
-    fun reloc(pkg: String) = relocate(pkg, "io.papermc.paperweight.testplugin.dependency.$pkg")
+    fun reloc(pkg: String) = relocate(pkg, "de.leghast.holography.dependency.$pkg")
 
     // relocate cloud and it's transitive dependencies
     reloc("cloud.commandframework")

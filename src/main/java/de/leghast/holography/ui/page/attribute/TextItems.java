@@ -1,5 +1,8 @@
 package de.leghast.holography.ui.page.attribute;
 
+import de.leghast.holography.constant.Colors;
+import de.leghast.holography.ui.InterfaceItem;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -8,35 +11,20 @@ public class TextItems {
 
     public static void getTextItems(ItemStack[] content){
 
-        ItemStack text = new ItemStack(Material.NAME_TAG);
-        ItemMeta textMeta = text.getItemMeta();
-        textMeta.setDisplayName("§eChange the displayed text");
-        text.setItemMeta(textMeta);
-        content[29] = text;
+        content[29] = new InterfaceItem(Material.NAME_TAG)
+                .name(Component.text("Change the displayed text", Colors.ACCENT));
 
-        ItemStack line = new ItemStack(Material.PAPER);
-        ItemMeta lineMeta = line.getItemMeta();
-        lineMeta.setDisplayName("§eSet the line width");
-        line.setItemMeta(lineMeta);
-        content[30] = line;
+        content[30] = new InterfaceItem(Material.PAPER)
+                .name(Component.text("Change the line width", Colors.ACCENT));
 
-        ItemStack shadow = new ItemStack(Material.BLACKSTONE);
-        ItemMeta shadowMeta = shadow.getItemMeta();
-        shadowMeta.setDisplayName("§eToggle shadow");
-        shadow.setItemMeta(shadowMeta);
-        content[31] = shadow;
+        content[31] = new InterfaceItem(Material.BLACKSTONE)
+                .name(Component.text("Toggle shadow", Colors.ACCENT));
 
-        ItemStack color = new ItemStack(Material.ORANGE_DYE);
-        ItemMeta colorMeta = color.getItemMeta();
-        colorMeta.setDisplayName("§eSet the text color");
-        color.setItemMeta(colorMeta);
-        content[32] = color;
+        content[32] = new InterfaceItem(Material.ORANGE_DYE)
+                .name(Component.text("Change the text color", Colors.ACCENT));
 
-        ItemStack opacity = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
-        ItemMeta opacityMeta = opacity.getItemMeta();
-        opacityMeta.setDisplayName("§eSet text opacity");
-        opacity.setItemMeta(opacityMeta);
-        content[33] = opacity;
+        content[33] = new InterfaceItem(Material.WHITE_STAINED_GLASS_PANE)
+                .name(Component.text("Change the text opacity", Colors.ACCENT));
 
     }
 
