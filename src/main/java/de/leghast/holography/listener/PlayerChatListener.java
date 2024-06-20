@@ -4,7 +4,6 @@ import de.leghast.holography.Holography;
 import de.leghast.holography.constant.Message;
 import de.leghast.holography.display.DisplayWrapper;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,7 +32,7 @@ public class PlayerChatListener implements Listener {
 
         DisplayWrapper wrapper = main.getClipboardManager().getWrapper(e.getPlayer().getUniqueId());
 
-        wrapper.setNewText((TextComponent) e.message());
+        wrapper.displayText(((TextComponent) e.message()).content());
         e.getPlayer().sendMessage(Message.setText(wrapper.display().text()));
 
     }

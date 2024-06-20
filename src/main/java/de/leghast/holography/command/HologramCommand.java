@@ -3,6 +3,7 @@ package de.leghast.holography.command;
 import de.leghast.holography.Holography;
 import de.leghast.holography.constant.Colors;
 import de.leghast.holography.constant.Message;
+import de.leghast.holography.display.DisplayWrapper;
 import de.leghast.holography.manager.ConfigManager;
 import de.leghast.holography.ui.UserInterface;
 import net.kyori.adventure.text.Component;
@@ -121,13 +122,15 @@ public class HologramCommand implements TabExecutor {
 
     private void createHolo(String[] args, Player player) {
         TextDisplay display = spawnTextDisplay(player.getLocation().add(0, 2, 0));
+        DisplayWrapper wrapper = new DisplayWrapper(display);
         if (args.length >= 2) {
             String text = String.join(" ", Arrays.stream(args).toList().subList(1, args.length));
 
-            display.text(MiniMessage.miniMessage().deserialize(text));
+            wrapper.displayText(text);
 
         }
         main.getClipboardManager().update(player.getUniqueId(), display);
+        player.sendMessage(Message.createdHolo(display.text()));
     }
 
     @Override

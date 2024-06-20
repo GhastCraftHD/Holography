@@ -8,6 +8,9 @@ description: $description
 commands:
   hologram:
     aliases: holo
+    description: The main command from Holography
+    permission: holography.use
+
 permissions:
   holography.use:
     default: op

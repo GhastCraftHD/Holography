@@ -96,6 +96,13 @@ public class Message {
         );
     }
 
+    public static Component createdHolo(Component text){
+        return Prefix.HOLOGRAPHY.append(
+                Component.text("Created ", Colors.SUCCESS)
+                        .append(text.color((text.color() == null) ? NamedTextColor.WHITE : text.color()))
+        );
+    }
+
     public static Component setText(Component text){
         return Prefix.HOLOGRAPHY.append(
                 Component.text("Changed the text to ", Colors.SUCCESS)

@@ -50,7 +50,7 @@ public class InterfaceItem extends ItemStack {
 
     private void addGlint(){
         ItemMeta meta = super.getItemMeta();
-        meta.addEnchant(Enchantment.DURABILITY, 1, true);
+        meta.addEnchant(Enchantment.UNBREAKING, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         super.setItemMeta(meta);
     }

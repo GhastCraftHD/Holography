@@ -9,21 +9,21 @@ import java.util.UUID;
 
 public class ClipboardManager {
 
-    private Holography main;
+    private final HashMap<UUID, DisplayWrapper> clipboard;
 
-    private HashMap<UUID, DisplayWrapper> clipboard;
-
-    public ClipboardManager(Holography main){
-        this.main = main;
-
+    public ClipboardManager(){
         clipboard = new HashMap<>();
     }
 
-    public void update(UUID uuid, TextDisplay display){
+    public void update(UUID uuid, DisplayWrapper wrapper){
         if (hasClipboard(uuid)){
             remove(uuid);
         }
-        clipboard.put(uuid, new DisplayWrapper(display));
+        clipboard.put(uuid, wrapper);
+    }
+
+    public void update(UUID uuid, TextDisplay display){
+        update(uuid, new DisplayWrapper(display));
     }
 
     public DisplayWrapper getWrapper(UUID uuid){

@@ -1,5 +1,6 @@
 package de.leghast.holography;
 
+import com.destroystokyo.paper.Metrics;
 import de.leghast.holography.command.HologramCommand;
 import de.leghast.holography.listener.InventoryClickListener;
 import de.leghast.holography.listener.PlayerChatListener;
@@ -26,6 +27,7 @@ public final class Holography extends JavaPlugin {
     private ClipboardManager clipboardManager;
     private SettingsManager settingsManager;
     private ChatInputManager chatInputManager;
+    private Metrics metrics;
 
     private boolean updateAvailable = false;
     private String latestVersion = this.getPluginMeta().getVersion();
@@ -37,7 +39,7 @@ public final class Holography extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        clipboardManager = new ClipboardManager(this);
+        clipboardManager = new ClipboardManager();
         settingsManager = new SettingsManager();
         chatInputManager = new ChatInputManager();
         getCommand("hologram").setExecutor(new HologramCommand(this));
@@ -46,6 +48,7 @@ public final class Holography extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerChatListener(this), this);
         checkForUpdate();
+        this.metrics = new Metrics("PaperMC", "22336", true, getLogger());
     }
 
     public ClipboardManager getClipboardManager(){

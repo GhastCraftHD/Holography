@@ -6,9 +6,11 @@ import de.leghast.holography.settings.AttributeSettings;
 import de.leghast.holography.ui.AnvilInputHelper;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Axis;
 import org.bukkit.Color;
@@ -73,9 +75,8 @@ public record DisplayWrapper(TextDisplay display) {
 
     }
 
-    public void setNewText(TextComponent text){
-
-        display.text(MiniMessage.miniMessage().deserialize(text.content()));
+    public void displayText(String text){
+        display.text(MiniMessage.miniMessage().deserialize(text));
     }
 
     public void setTextColor(Holography main, Player player) {
